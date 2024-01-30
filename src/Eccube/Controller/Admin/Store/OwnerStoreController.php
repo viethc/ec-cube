@@ -32,6 +32,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 
 /**
  * @Route("/%eccube_admin_route%/store/plugin/api")
@@ -47,6 +50,11 @@ class OwnerStoreController extends AbstractController
      * @var PluginService
      */
     protected $pluginService;
+
+    /**
+     * @var ValidatorInterface
+     */
+    protected $validator;
 
     /**
      * @var ComposerServiceInterface
@@ -81,6 +89,7 @@ class OwnerStoreController extends AbstractController
      * @param PluginApiService $pluginApiService
      * @param BaseInfoRepository $baseInfoRepository
      * @param CacheUtil $cacheUtil
+     * @param ValidatorInterface $validatorInterface
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
@@ -92,7 +101,8 @@ class OwnerStoreController extends AbstractController
         SystemService $systemService,
         PluginApiService $pluginApiService,
         BaseInfoRepository $baseInfoRepository,
-        CacheUtil $cacheUtil
+        CacheUtil $cacheUtil,
+        ValidatorInterface $validatorInterface
     ) {
         $this->pluginRepository = $pluginRepository;
         $this->pluginService = $pluginService;
@@ -100,6 +110,7 @@ class OwnerStoreController extends AbstractController
         $this->pluginApiService = $pluginApiService;
         $this->BaseInfo = $baseInfoRepository->get();
         $this->cacheUtil = $cacheUtil;
+        $this->validator = $validatorInterface;
 
         // TODO: Check the flow of the composer service below
         $this->composerService = $composerService;
@@ -263,13 +274,32 @@ class OwnerStoreController extends AbstractController
 
         $pluginCode = $request->get('pluginCode');
 
-        try {
-            $log = $this->composerService->execRequire('ec-cube/'.$pluginCode);
+        $errors = $this->validator->validate(
+            $pluginCode,
+            [
+                new Assert\NotBlank(),
+                new Assert\Regex(
+                    [
+                        'pattern' => '/^[a-zA-Z0-9]+$/',
+                    ]
+                ),
+            ]
+        );
 
-            return $this->json(['success' => true, 'log' => $log]);
-        } catch (\Exception $e) {
-            $log = $e->getMessage();
-            log_error($e);
+        if ($errors->count() != 0) {
+            $log = [];
+            foreach ($errors as $error) {
+                $log[] = $error->getMessage();
+            }
+        } else {
+            try {
+                $log = $this->composerService->execRequire('ec-cube/'.$pluginCode);
+
+                return $this->json(['success' => true, 'log' => $log]);
+            } catch (\Exception $e) {
+                $log = $e->getMessage();
+                log_error($e);
+            }
         }
 
         return $this->json(['success' => false, 'log' => $log], 500);
