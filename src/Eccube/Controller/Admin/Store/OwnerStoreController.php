@@ -35,7 +35,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-
 /**
  * @Route("/%eccube_admin_route%/store/plugin/api")
  */
@@ -54,7 +53,7 @@ class OwnerStoreController extends AbstractController
     /**
      * @var ValidatorInterface
      */
-    protected $validator;
+    protected ValidatorInterface $validator;
 
     /**
      * @var ComposerServiceInterface
