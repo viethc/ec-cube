@@ -49,4 +49,40 @@ class PluginControllerTest extends AbstractAdminWebTestCase
         $this->actual = $this->entityManager->getRepository(\Eccube\Entity\BaseInfo::class)->get()->getPhpPath();
         $this->verify();
     }
+
+    /**
+     * * @dataProvider OwnerStoreInstallParam
+     */
+    public function testInstall($param1, $param2, $message)
+    {
+        $form = [
+            'pluginCode' => $param1,
+            'version' => $param2
+        ];
+
+        $crawler = $this->client->request('POST',
+            $this->generateUrl('admin_store_plugin_api_install', $form),
+            [],
+            [],
+            [
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
+                'CONTENT_TYPE' => 'application/json',
+            ]
+        );
+        //ダウンロードできないことを確認
+        $this->assertEquals(500, $this->client->getResponse()->getStatusCode());
+        //ログを確認
+        $this->assertContains($message, json_decode($this->client->getResponse()->getContent())->log);
+    }
+
+    /**
+     * 異常系のテストケース
+     */
+    public function OwnerStoreInstallParam()
+    {
+        return [
+            ['api42+symfony/yaml:5.3', '4.2.3', '有効な値ではありません。'],
+            ['', '4.2.3','入力されていません。'],
+        ];
+    }
 }
