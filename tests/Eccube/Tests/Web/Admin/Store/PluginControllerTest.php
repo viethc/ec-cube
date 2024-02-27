@@ -53,11 +53,11 @@ class PluginControllerTest extends AbstractAdminWebTestCase
     /**
      * * @dataProvider OwnerStoreInstallParam
      */
-    public function testInstall($param1, $param2, $message)
+    public function testFailureInstall($param1, $param2, $message)
     {
         $form = [
             'pluginCode' => $param1,
-            'version' => $param2
+            'version' => $param2,
         ];
 
         $crawler = $this->client->request('POST',
@@ -69,9 +69,9 @@ class PluginControllerTest extends AbstractAdminWebTestCase
                 'CONTENT_TYPE' => 'application/json',
             ]
         );
-        //ダウンロードできないことを確認
+        //　ダウンロードできないことを確認
         $this->assertEquals(500, $this->client->getResponse()->getStatusCode());
-        //ログを確認
+        //　ログを確認
         $this->assertContains($message, json_decode($this->client->getResponse()->getContent())->log);
     }
 
