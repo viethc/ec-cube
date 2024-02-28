@@ -51,7 +51,10 @@ class PluginControllerTest extends AbstractAdminWebTestCase
     }
 
     /**
-     * * @dataProvider OwnerStoreInstallParam
+     * 異常系を確認。正常系のインストールはE2Eテストの方で実施
+     *
+     * @dataProvider OwnerStoreInstallParam
+     * 
      */
     public function testFailureInstall($param1, $param2, $message)
     {
