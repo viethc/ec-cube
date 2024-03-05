@@ -68,7 +68,7 @@ class OwnerStoreController extends AbstractController
     /**
      * @var ValidatorInterface
      */
-    protected ValidatorInterface $validator;
+    protected $validator;
 
     private static $vendorName = 'ec-cube';
 
