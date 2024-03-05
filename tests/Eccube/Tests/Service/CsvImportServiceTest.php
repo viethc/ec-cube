@@ -97,6 +97,7 @@ class CsvImportServiceTest extends AbstractServiceTestCase
             if (empty(array_filter($row))) {
                 continue;
             }
+            
             $this->assertNotNull($row['id']);
             $this->assertNotNull($row['number']);
             $this->assertNotNull($row['description']);
