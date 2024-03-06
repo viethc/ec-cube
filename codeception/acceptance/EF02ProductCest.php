@@ -58,6 +58,7 @@ class EF02ProductCest
         $products = $I->grabMultiple(['xpath' => "//*[@class='ec-shelfGrid__item']/a/p[2]"]);
         $pPos = 0;
         $fPos = 0;
+        $I->wait(1);
         foreach ($products as $key => $product) {
             if ($product == 'チェリーアイスサンド') {
                 $pPos = $key;
@@ -82,6 +83,9 @@ class EF02ProductCest
         $products = $I->grabMultiple(['xpath' => "//*[@class='ec-shelfGrid__item']/a/p[1]"]);
         $pPos = 0;
         $fPos = 0;
+        
+        $I->wait(1);
+        
         foreach ($products as $key => $product) {
             if ($product == 'チェリーアイスサンド') {
                 $pPos = $key;
