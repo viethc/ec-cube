@@ -58,7 +58,6 @@ class EF02ProductCest
         $products = $I->grabMultiple(['xpath' => "//*[@class='ec-shelfGrid__item']/a/p[2]"]);
         $pPos = 0;
         $fPos = 0;
-        $I->wait(1);
         foreach ($products as $key => $product) {
             if ($product == 'チェリーアイスサンド') {
                 $pPos = $key;
@@ -69,23 +68,16 @@ class EF02ProductCest
         }
         $I->assertTrue(($pPos < $fPos));
 
-        $I->wait(1);
-
         $listPage = new ProductListPage($I);
         // ソート条件の選択リストを変更する 価格順->新着順
         $listPage
             ->表示件数設定(40)
             ->表示順設定('新着順');
 
-        $I->wait(1);
-
         // 変更されたソート条件に従い、商品がソートされる
         $products = $I->grabMultiple(['xpath' => "//*[@class='ec-shelfGrid__item']/a/p[1]"]);
         $pPos = 0;
         $fPos = 0;
-        
-        $I->wait(1);
-        
         foreach ($products as $key => $product) {
             if ($product == 'チェリーアイスサンド') {
                 $pPos = $key;
