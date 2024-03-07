@@ -84,7 +84,7 @@ jobs:
 
       - name: composer install
         run: |
-          sudo composer selfupdate 2.6.6
+          sudo composer self-update --2.2
           composer install --dev --no-interaction -o --apcu-autoloader
 
       - name: Setup to EC-CUBE
@@ -228,7 +228,7 @@ jobs:
 
       - name: Install to Composer
         run: |
-          sudo composer selfupdate 2.6.6
+          sudo composer self-update --2.2
           composer install --dev --no-interaction -o --apcu-autoloader
 
       - name: Setup to EC-CUBE
@@ -372,7 +372,7 @@ jobs:
 
       - name: Install to Composer
         run: |
-          sudo composer selfupdate 2.6.6
+          sudo composer self-update --2.2
           composer install --dev --no-interaction -o --apcu-autoloader
 
       - name: Setup to EC-CUBE
@@ -519,7 +519,7 @@ jobs:
 
       - name: Install to Composer
         run: |
-          sudo composer selfupdate 2.6.6
+          sudo composer self-update --2.2
           composer install --dev --no-interaction -o --apcu-autoloader
 
       - name: Setup to EC-CUBE

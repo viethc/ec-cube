@@ -38,7 +38,7 @@ jobs:
 
       - name: Install to Composer
         run: |
-          sudo composer selfupdate 2.6.6 
+          sudo composer self-update --2.2 
           composer install --no-scripts --no-dev --no-interaction --optimize-autoloader
 
       - name: Translate to templates
