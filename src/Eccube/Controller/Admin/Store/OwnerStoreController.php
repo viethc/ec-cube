@@ -288,7 +288,6 @@ class OwnerStoreController extends AbstractController
             ]
         );
 
-        $log = null;
         if ($errors->count() != 0) {
             $log = [];
             foreach ($errors as $error) {
