@@ -394,7 +394,7 @@ class OwnerStoreController extends AbstractController
 
         if ($errors->count() != 0) {
             foreach ($errors as $error) {
-                $log[] = $pluginCode.':'.$error->getMessage();
+                $log[] = $error->getMessage();
             }
         }
 
@@ -412,7 +412,7 @@ class OwnerStoreController extends AbstractController
 
         if ($errors->count() != 0) {
             foreach ($errors as $error) {
-                $log[] = $version.':'.$error->getMessage();
+                $log[] = $error->getMessage();
             }
         }
 
