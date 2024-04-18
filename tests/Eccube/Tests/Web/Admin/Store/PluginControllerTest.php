@@ -106,8 +106,6 @@ class PluginControllerTest extends AbstractAdminWebTestCase
 
         //　ログを確認
         $this->assertTrue(strpos(implode(',', json_decode($this->client->getResponse()->getContent())->log), $message) !== false);
-
-        #$this->assertStringContainsString($message, implode(',', json_decode($this->client->getResponse()->getContent())->log));
     }
 
     /**
