@@ -285,7 +285,6 @@ class OwnerStoreController extends AbstractController
             ]
         );
 
-        $log = null;
         if ($errors->count() != 0) {
             $log = [];
             foreach ($errors as $error) {
@@ -373,14 +372,53 @@ class OwnerStoreController extends AbstractController
         $pluginCode = $request->get('pluginCode');
         $version = $request->get('version');
 
-        $log = null;
-        try {
-            $log = $this->composerService->execRequire('ec-cube/'.$pluginCode.':'.$version);
+        $log = [];
+        
+        $errors = $this->validator->validate(
+            $pluginCode,
+            [
+                new Assert\NotBlank(),
+                new Assert\Regex(
+                    [
+                        'pattern' => '/^[a-zA-Z0-9_]+$/',
+                    ]
+                ),
+            ]
+        );
 
-            return $this->json(['success' => true, 'log' => $log]);
-        } catch (\Exception $e) {
-            $log = $e->getMessage();
-            log_error($e);
+        if ($errors->count() != 0) {
+            foreach ($errors as $error) {
+                $log[] = $pluginCode.':'.$error->getMessage();
+            }
+        }
+
+        $errors = $this->validator->validate(
+            $version,
+            [
+                new Assert\NotBlank(),
+                new Assert\Regex(
+                    [
+                        'pattern' => '/^[0-9.]+$/',
+                    ]
+                ),
+            ]
+        );
+
+        if ($errors->count() != 0) {
+            foreach ($errors as $error) {
+                $log[] = $version.':'.$error->getMessage();
+            }
+        }
+
+        if (empty($log)) {
+            try {
+                $log = $this->composerService->execRequire('ec-cube/'.$pluginCode.':'.$version);
+
+                return $this->json(['success' => true, 'log' => $log]);
+            } catch (\Exception $e) {
+                $log = $e->getMessage();
+                log_error($e);
+            }
         }
 
         return $this->json(['success' => false, 'log' => $log], 500);
