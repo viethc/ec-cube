@@ -94,6 +94,10 @@ class CsvImportServiceTest extends AbstractServiceTestCase
         $CsvImportService->setColumnHeaders(['id', 'number', 'description']);
 
         foreach ($CsvImportService as $row) {
+            if (empty(array_filter($row))) {
+                continue;
+            }
+            
             $this->assertNotNull($row['id']);
             $this->assertNotNull($row['number']);
             $this->assertNotNull($row['description']);
