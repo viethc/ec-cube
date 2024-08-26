@@ -32,7 +32,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/inflector": "^2.0",
         "doctrine/instantiator": "^1.1",
-        "doctrine/lexer": "^2.0",
+        "doctrine/lexer": "^3.0",
         "doctrine/orm": "^2.11",
         "doctrine/persistence": "^3.1",
         "ec-cube/plugin-installer": "^2.0",
