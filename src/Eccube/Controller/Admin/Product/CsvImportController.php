@@ -857,7 +857,7 @@ class CsvImportController extends AbstractCsvImportController
     /**
      * 規格登録CSVアップロード
      *
-     * @Route("/%eccube_admin_route%/product/class_name_csv_upload", name="admin_product_class_name_csv_import")
+     * @Route("/%eccube_admin_route%/product/class_name_csv_upload", name="admin_product_class_name_csv_import", methods={"GET", "POST"})
      * @Template("@admin/Product/csv_class_name.twig")
      */
     public function csvClassName(Request $request, CacheUtil $cacheUtil)
@@ -977,7 +977,7 @@ class CsvImportController extends AbstractCsvImportController
     /**
      * 規格分類CSV登録CSVアップロード
      *
-     * @Route("/%eccube_admin_route%/product/class_category_csv_upload", name="admin_product_class_category_csv_import")
+     * @Route("/%eccube_admin_route%/product/class_category_csv_upload", name="admin_product_class_category_csv_import", methods={"GET", "POST"})
      * @Template("@admin/Product/csv_class_category.twig")
      */
     public function csvClassCategory(Request $request, CacheUtil $cacheUtil)

@@ -280,7 +280,7 @@ class ClassCategoryController extends AbstractController
     /**
      * 規格分類CSVの出力.
      *
-     * @Route("/%eccube_admin_route%/product/class_category/export/{class_name_id}", name="admin_product_class_category_export")
+     * @Route("/%eccube_admin_route%/product/class_category/export/{class_name_id}", name="admin_product_class_category_export", methods={"GET"})
      *
      * @param Request $request
      *
@@ -330,7 +330,7 @@ class ClassCategoryController extends AbstractController
                         ],
                         $request
                     );
-                    $this->eventDispatcher->dispatch(EccubeEvents::ADMIN_PRODUCT_CLASS_CATEGORY_CSV_EXPORT, $event);
+                    $this->eventDispatcher->dispatch($event, EccubeEvents::ADMIN_PRODUCT_CLASS_CATEGORY_CSV_EXPORT);
 
                     $ExportCsvRow->pushData();
                 }
@@ -343,7 +343,6 @@ class ClassCategoryController extends AbstractController
         $filename = 'class_category_'.$now->format('YmdHis').'.csv';
         $response->headers->set('Content-Type', 'application/octet-stream');
         $response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
-        $response->send();
 
         log_info('規格分類CSV出力ファイル名', [$filename]);
 

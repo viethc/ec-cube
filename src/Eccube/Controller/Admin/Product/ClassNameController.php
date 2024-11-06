@@ -200,7 +200,7 @@ class ClassNameController extends AbstractController
     /**
      * 規格CSVの出力.
      *
-     * @Route("/%eccube_admin_route%/product/class_name/export", name="admin_product_class_name_export")
+     * @Route("/%eccube_admin_route%/product/class_name/export", name="admin_product_class_name_export", methods={"GET"})
      *
      * @param Request $request
      *
@@ -249,7 +249,7 @@ class ClassNameController extends AbstractController
                         ],
                         $request
                     );
-                    $this->eventDispatcher->dispatch(EccubeEvents::ADMIN_PRODUCT_CLASS_NAME_CSV_EXPORT, $event);
+                    $this->eventDispatcher->dispatch($event, EccubeEvents::ADMIN_PRODUCT_CLASS_NAME_CSV_EXPORT);
 
                     $ExportCsvRow->pushData();
                 }
@@ -263,7 +263,6 @@ class ClassNameController extends AbstractController
         $filename = 'class_name_'.$now->format('YmdHis').'.csv';
         $response->headers->set('Content-Type', 'application/octet-stream');
         $response->headers->set('Content-Disposition', 'attachment; filename='.$filename);
-        $response->send();
 
         log_info('規格CSV出力ファイル名', [$filename]);
 

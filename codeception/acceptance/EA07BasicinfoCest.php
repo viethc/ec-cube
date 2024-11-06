@@ -862,6 +862,54 @@ class EA07BasicinfoCest
 
     /**
      * @group vaddy
+     * @group mailsetting
+     */
+    public function basicinfo_メール設定_テンプレート新規作成_削除(AcceptanceTester $I)
+    {
+        $I->wantTo('EA0709-UC02-T02 メール設定_テンプレート新規作成_削除');
+
+        $id = uniqid();
+        $title = 'title'.$id;
+        $template_name = 'template'.$id;
+        $file_name = 'filename'.$id;
+        $text = 'text'.$id;
+        $html = '<p>HTML</p>'.$id;
+
+        /** テンプレート作成 */
+        MailSettingsPage::go($I)
+            ->入力_新規テンプレート名($template_name)
+            ->入力_ファイル名($file_name)
+            ->入力_件名($title)
+            ->入力_テキスト($text)
+            ->入力_HTML($html)
+            ->登録();
+
+        $I->waitForText('保存しました', 10, MailSettingsPage::$登録完了メッセージ);
+
+        /** 受注メールから送信して確認する */
+        $I->resetEmails();
+        OrderManagePage::go($I)->検索()
+            ->一覧_編集(1)
+            ->遷移_メールを作成()
+            ->選択_メールテンプレート($template_name)
+            ->メール送信();
+
+        // 送信メール確認
+        $I->waitForText('メールを送信しました。', 10, OrderEditPage::$メール送信完了メッセージ);
+        $message = $I->lastMessage();
+        $I->assertCount(2, $message->getRecipients(), 'Bcc で管理者にも送信するので宛先アドレスは2つ');
+        $I->seeEmailCount(1);
+
+        $baseinfo = Fixtures::get('baseinfo');
+        $I->seeInLastEmailSubjectTo('admin@example.com', $title);
+
+        /** メールテンプレート削除 */
+        MailSettingsPage::go($I)->入力_テンプレート($template_name)->削除_テンプレート();
+        $I->waitForText('削除しました',10,'#page_admin_setting_shop_mail > div.c-container > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3 > span');
+    }
+
+    /**
+     * @group vaddy
      * @group csvsetting
      */
     public function basicinfo_CSV出力項目(AcceptanceTester $I)
@@ -1016,5 +1064,27 @@ class EA07BasicinfoCest
         $I->expect('納品書の内容を確認します');
 
         $I->getScenario()->incomplete('SJISの納品書を確認することが困難なため未実装');
+    }
+
+    /**
+     * @group vaddy
+     * @group basicsetting
+     */
+    public function basicinfo_GAタグ設定(AcceptanceTester $I)
+    {
+        $I->wantTo('EA0714-UC01-T01 GAタグ設定');
+
+        // GAタグ設定
+        $page = ShopSettingPage::go($I)
+            ->入力_GAタグ('UA-12345678-1');
+        $I->wait(1);
+        $page->登録();
+
+        $I->waitForText('保存しました', 10, ShopSettingPage::$登録完了メッセージ);
+
+        // GAタグが設定されているか
+        $I->amOnPage('/');
+        $I->seeInPageSource('https://www.googletagmanager.com/gtag/js?id=UA-12345678-1');
+
     }
 }

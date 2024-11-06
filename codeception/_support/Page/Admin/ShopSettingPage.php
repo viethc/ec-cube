@@ -115,4 +115,10 @@ class ShopSettingPage extends AbstractAdminPageStyleGuide
 
         return $this;
     }
+    public function 入力_GAタグ($value)
+    {
+        $this->tester->fillField(['id' => 'shop_master_ga_id'], $value);
+
+        return $this;
+    }
 }

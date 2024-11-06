@@ -145,7 +145,9 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
 
     public function 一覧_編集($rowNum)
     {
-        $this->tester->click("#search_result > tbody > tr:nth-child(${rowNum}) a.action-edit");
+        $this->tester->click("#search_result > tbody > tr:nth-child({$rowNum}) a.action-edit");
+
+        return $this;
     }
 
     public function 一覧_削除()
@@ -173,7 +175,7 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
 
     public function 一覧_メール通知($rowNum)
     {
-        $this->tester->click(['css' => "#search_result > tbody > tr:nth-child(${rowNum}) > td.align-middle.pe-3 > div > div:nth-child(1) > a"]);
+        $this->tester->click(['css' => "#search_result > tbody > tr:nth-child({$rowNum}) > td.align-middle.pe-3 > div > div:nth-child(1) > a"]);
         $this->tester->waitForElementVisible(['id' => 'sentUpdateModal']);
         $this->tester->scrollTo(['id' => 'bulkChange']);
         $this->tester->click(['id' => 'bulkChange']);
@@ -184,7 +186,7 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
 
     public function 一覧_選択($rowNum)
     {
-        $this->tester->checkOption(['css' => "#search_result > tbody > tr:nth-child(${rowNum}) > td > input[type=checkbox]"]);
+        $this->tester->checkOption(['css' => "#search_result > tbody > tr:nth-child({$rowNum}) > td > input[type=checkbox]"]);
 
         return $this;
     }
@@ -198,7 +200,7 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
 
     public function 個別メール送信($rowNum)
     {
-        $this->tester->click(['css' => "#search_result > tbody > tr:nth-child(${rowNum}) > td.align-middle.pe-3.text-center > div > div:nth-child(1) > a"]);
+        $this->tester->click(['css' => "#search_result > tbody > tr:nth-child({$rowNum}) > td.align-middle.pe-3.text-center > div > div:nth-child(1) > a"]);
         $this->tester->waitForElementVisible(['id' => 'sentUpdateModal']);
         $this->tester->scrollTo(['id' => 'bulkChange']);
         $this->tester->click(['id' => 'bulkChange']);
@@ -266,17 +268,17 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
 
     public function 取得_出荷伝票番号($rowNum)
     {
-        return $this->tester->grabValueFrom("#search_result > tbody > tr:nth-child(${rowNum}) > td:nth-child(8) > div > input");
+        return $this->tester->grabValueFrom("#search_result > tbody > tr:nth-child({$rowNum}) > td:nth-child(8) > div > input");
     }
 
     public function 取得_出荷日($rowNum)
     {
-        return $this->tester->grabTextFrom("#search_result > tbody > tr:nth-child(${rowNum}) > td:nth-child(7)");
+        return $this->tester->grabTextFrom("#search_result > tbody > tr:nth-child({$rowNum}) > td:nth-child(7)");
     }
 
     public function 取得_ステータス($rowNum)
     {
-        return $this->tester->grabTextFrom("#search_result > tbody > tr:nth-child(${rowNum}) > td:nth-child(4) > span");
+        return $this->tester->grabTextFrom("#search_result > tbody > tr:nth-child({$rowNum}) > td:nth-child(4) > span");
     }
 
     public function 件数変更($num)
@@ -318,5 +320,34 @@ class OrderManagePage extends AbstractAdminPageStyleGuide
         }
 
         $this->tester->assertEquals($expect, $values);
+    }
+
+    public function 遷移_メールを作成()
+    {
+        // メール履歴が多いと、フッターに隠れるため
+        $this->tester->wait(1);
+        $this->tester->scrollTo('#mailHistory > div > div > a');
+        $this->tester->wait(1);
+        $this->tester->seeElement('#mailHistory > div > div > a');
+        $this->tester->click('#mailHistory > div > div > a');
+        $this->tester->wait(1);
+        $this->tester->click('#confirmFormChangeModal > div > div > div.modal-footer > a.btn.btn-ec-sub');
+
+        return $this;
+    }
+
+    public function 選択_メールテンプレート($value)
+    {
+        $this->tester->selectOption('#template-change', $value);
+
+        return $this;
+    }
+
+    public function メール送信()
+    {
+        $this->tester->click("#order-mail-form > div.c-conversionArea > div > div > div:nth-child(2) > div > div > button");
+        $this->tester->click("#order-mail-form > div > div.c-conversionArea > div > div > div:nth-child(2) > div > div > button");
+
+        return $this;
     }
 }

@@ -382,4 +382,23 @@ class EF06OtherCest
         $I->amOnPage($sitemapUrl);
         $I->see($productLoc);
     }
+
+    /**
+     * @group block
+     * @group vaddy
+     */
+    public function other_block_新着商品_自動取得(AcceptanceTester $I)
+    {
+        $I->wantTo('EF0609-UC01-T01_other_block_新着商品_自動取得)');
+        $I->amOnPage('/block/auto_new_item');
+
+        // タイトル
+        $I->see('NEW ITEM 新着商品');
+        // 商品画像
+        $I->seeElement('body > div > div > div > div:nth-child(2) > a > img');
+        // 商品名
+        $I->seeElement('body > div > div > div > div:nth-child(2) > a > p.ec-newItemRole__listItemTitle');
+        // 商品金額
+        $I->seeElement('body > div > div > div > div:nth-child(2) > a > p.ec-newItemRole__listItemPrice');
+    }
 }

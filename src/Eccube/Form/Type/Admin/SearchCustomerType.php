@@ -19,6 +19,7 @@ use Eccube\Form\Type\Master\CustomerStatusType;
 use Eccube\Form\Type\Master\PrefType;
 use Eccube\Form\Type\Master\SexType;
 use Eccube\Form\Type\PriceType;
+use Eccube\Form\Type\PhoneNumberType;
 use Eccube\Repository\Master\CustomerStatusRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -140,15 +141,9 @@ class SearchCustomerType extends AbstractType
                 'label' => 'admin.common.pref',
                 'required' => false,
             ])
-            ->add('phone_number', TextType::class, [
+            ->add('phone_number', PhoneNumberType::class, [
                 'label' => 'admin.common.phone_number',
                 'required' => false,
-                'constraints' => [
-                    new Assert\Regex([
-                        'pattern' => "/^[\d-]+$/u",
-                        'message' => 'form_error.graph_and_hyphen_only',
-                    ]),
-                ],
             ])
             ->add('buy_product_name', TextType::class, [
                 'label' => 'admin.order.purchase_product',

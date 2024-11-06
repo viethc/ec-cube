@@ -20,6 +20,7 @@ class OrderEditPage extends AbstractAdminPageStyleGuide
     public static $ポイント値引き額 = '//span[contains(text(), "ポイント")]/parent::div/following-sibling::div/span';
     public static $利用ポイント = '#order_use_point';
     public static $加算ポイント = '//span[contains(text(), "加算ポイント")]/parent::div/following-sibling::div/span';
+    public static $メール送信完了メッセージ = '#page_admin_order_edit > div.c-container > div.c-contentsArea > div.alert.alert-success.alert-dismissible.fade.show.m-3';
 
     /**
      * OrderRegisterPage constructor.
@@ -166,7 +167,7 @@ class OrderEditPage extends AbstractAdminPageStyleGuide
     public function 商品検索結果_選択($rowNum)
     {
         $rowNum = $rowNum * 2;
-        $this->tester->click(['css' => "#searchProductModalList > table > tbody > tr:nth-child(${rowNum}) > td.text-end > button"]);
+        $this->tester->click(['css' => "#searchProductModalList > table > tbody > tr:nth-child({$rowNum}) > td.text-end > button"]);
         $this->tester->waitForElementNotVisible(['id' => 'searchProductModalList']);
 
         return $this;
