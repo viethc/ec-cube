@@ -18,6 +18,7 @@ use Eccube\Entity\Shipping;
 use Eccube\Form\Type\Master\OrderStatusType;
 use Eccube\Form\Type\Master\PaymentType;
 use Eccube\Form\Type\PriceType;
+use Eccube\Form\Type\PhoneNumberType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -90,15 +91,9 @@ class SearchOrderType extends AbstractType
                 'label' => 'admin.order.order_no',
                 'required' => false,
             ])
-            ->add('phone_number', TextType::class, [
+            ->add('phone_number', PhoneNumberType::class, [
                 'label' => 'admin.common.phone_number',
                 'required' => false,
-                'constraints' => [
-                    new Assert\Regex([
-                        'pattern' => "/^[\d-]+$/u",
-                        'message' => 'form_error.graph_and_hyphen_only',
-                    ]),
-                ],
             ])
             ->add('tracking_number', TextType::class, [
                 'label' => 'admin.order.tracking_number',

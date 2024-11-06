@@ -67,6 +67,11 @@ jobs:
       - name: Initialize Composer
         uses: ./.github/actions/composer
 
+      - name: Build Sass and JavaScript
+        run: |
+          npm ci
+          npm run build
+
       - name: Setup to EC-CUBE
         env:
           APP_ENV: ${{ matrix.app_env }}
@@ -88,7 +93,7 @@ jobs:
       - name: Run chromedriver
         run: |
           export DISPLAY=:99
-          chromedriver --url-base=/wd/hub &
+          chromedriver --url-base=/wd/hub --port=9515 &
           echo ">>> Started chrome-driver"
           sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 &
           echo ">>> Started xvfb"
@@ -152,12 +157,31 @@ jobs:
           sed -i "s|%GITHUB_WORKSPACE%|${GITHUB_WORKSPACE}|g" codeception/_envs/github_action.yml
           vendor/bin/codecept -vvv run acceptance --env chrome,github_action -g ${GROUP} --html report.html
 
+      - name: Get a ScreenShots
+        run: |
+          php -S 127.0.0.1:8000 &
+          echo 'google-chrome --headless --no-sandbox --disable-gpu --screenshot=$1 --virtual-time-budget=10000 $2' > take_screenshot.sh
+          sudo sh take_screenshot.sh front_top.png http://127.0.0.1:8000
+          sudo sh take_screenshot.sh admin_top.png http://127.0.0.1:8000/admin
+
       - name: Upload evidence
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: codeception-${{ matrix.group }}-evidence
           path: codeception/_output/
+
+      -   name: List files in current directory
+          run: ls -la
+
+      -   name: Upload ScreenShots
+          uses: actions/upload-artifact@v4
+          with:
+            name: screenshots-${{ matrix.group }}
+            path: |
+              front_top.png
+              admin_top.png
+
       - name: Upload logs
         if: failure()
         uses: actions/upload-artifact@v4
