@@ -75,7 +75,7 @@
     "process": "^0.11.10",
     "sass": "^1.77.2",
     "sort-css-media-queries": "^1.4.3",
-    "webpack": "^5.76.0",
+    "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
     "webpack-stream": "^7.0.0"
   }
