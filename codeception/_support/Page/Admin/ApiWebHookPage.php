@@ -37,7 +37,7 @@ class ApiWebHookPage extends AbstractAdminPageStyleGuide
     {
         $this->tester->click(['xpath' => "//*[@id=\"page_admin_api_webhook\"]/div[1]/div[3]/div[2]/div/div/div[2]/div/table/tbody/tr[{$i}]/td[3]/div/div[2]//a[contains(@class, 'action-delete')]"]);
         $this->tester->waitForElementVisible(['xpath' => "//*[@id=\"page_admin_api_webhook\"]/div[1]/div[3]/div[2]/div/div/div[2]/div/table/tbody/tr[{$i}]/td[3]/div/div[2]//a[contains(@class, 'btn-ec-delete')]"]);
-        $this->tester->click(['xpath' => "//*[@id=\"page_admin_api_webhook\"]/div[1]/div[3]/div[2]/div/div/div[2]/div/table/tbody/tr[${i}]/td[3]/div/div[2]//a[contains(@class, 'btn-ec-delete')]"]);
+        $this->tester->click(['xpath' => "//*[@id=\"page_admin_api_webhook\"]/div[1]/div[3]/div[2]/div/div/div[2]/div/table/tbody/tr[{$i}]/td[3]/div/div[2]//a[contains(@class, 'btn-ec-delete')]"]);
         return $this;
     }
 }

@@ -3674,16 +3674,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.0.1",
+            "version": "v5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "2218c2252c874a4624ab2f613d86ac32d227bc69"
+                "reference": "3abf7425cd284141dc5d8d14a9ee444de3345d1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/2218c2252c874a4624ab2f613d86ac32d227bc69",
-                "reference": "2218c2252c874a4624ab2f613d86ac32d227bc69",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/3abf7425cd284141dc5d8d14a9ee444de3345d1a",
+                "reference": "3abf7425cd284141dc5d8d14a9ee444de3345d1a",
                 "shasum": ""
             },
             "require": {
@@ -3694,7 +3694,7 @@
             },
             "require-dev": {
                 "ircmaxell/php-yacc": "^0.0.7",
-                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
+                "phpunit/phpunit": "^9.0"
             },
             "bin": [
                 "bin/php-parse"
@@ -3726,9 +3726,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.0.1"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.3.0"
             },
-            "time": "2024-02-21T19:24:10+00:00"
+            "time": "2024-09-29T13:56:26+00:00"
         },
         {
             "name": "phpoption/phpoption",

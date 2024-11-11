@@ -1,4 +1,11 @@
 name: OWASP ZAP
+
+# このGitHub Actionsワークフローは手動でトリガー可能です。
+# 手動で実行するには、以下の手順に従ってください：
+# 1. GitHubリポジトリの「Actions」タブに移動します。
+# 2. 「OWASP ZAP」ワークフローを選択します。
+# 3. 「Run workflow」ボタンをクリックします。
+# 4. 必要に応じて、表示される入力フォームでパラメータを指定し、「Run workflow」を再度クリックして実行します。
 on:
   workflow_dispatch:
 
