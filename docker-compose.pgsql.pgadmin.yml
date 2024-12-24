@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres
+    container_name: ec-cube-db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - local_pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: viethc@unitech.vn
+      PGADMIN_DEFAULT_PASSWORD: passw0rd
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - backend
+
+volumes:
+  local_pgdata:
+    driver: local
+  pgadmin-data:
